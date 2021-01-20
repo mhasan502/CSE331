@@ -1,0 +1,40 @@
+ORG 100H
+
+LEA SI, ARRAY
+
+SEARCH:
+ MOV BL, [SI]
+ INC SI
+ 
+ CMP BL, "c"
+ JZ CHECK_A 
+ 
+CHECK_END:
+ CMP BL,"$"
+ JNZ SEARCH
+RET
+
+CHECK_A:
+ MOV BL, [SI]
+ INC SI 
+ 
+ CMP BL, "a"
+ JZ CHECK_R
+ 
+ JMP CHECK_END
+ 
+CHECK_R:
+ MOV BL, [SI]
+ INC SI
+ CMP BL, "r"
+ JZ COUNTER
+ JMP CHECK_END
+ 
+COUNTER:
+ INC COUNT
+ JMP CHECK_END
+RET 
+
+
+ARRAY DB "Super cars are better racecar than muscle cars$"
+COUNT DB 0

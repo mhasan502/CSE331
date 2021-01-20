@@ -1,0 +1,40 @@
+ORG 100H
+
+MOV AH, 9
+MOV DX, OFFSET MSG1
+INT 21H
+
+MOV AH, 1
+INT 21H
+SUB AL, '0'
+MOV AH, 0
+MOV CX, AX
+
+
+FACTORIAL:
+ MOV BX, CX
+ DEC BX
+ CMP BX, 0
+ JLE PRINT
+
+ MUL BX
+LOOP FACTORIAL
+
+
+PRINT:
+MOV BL, AL
+ADD BL, '0'
+
+MOV AH, 9
+MOV DX, OFFSET MSG2
+INT 21H
+
+MOV DL, BL
+
+MOV AH, 2
+INT 21H
+
+RET    
+
+MSG1 DB "Enter the number:$"
+MSG2 DB 10,13,"The factorial of the given number is:$"

@@ -1,0 +1,29 @@
+ORG 100H
+
+LEA SI,STR1
+LEA DI,STR2            
+
+SEARCH: 
+ MOV BL, [SI]
+ 
+ CMP BL, "$"
+ JZ EXIT 
+ 
+ CMP BL, 'o'
+ JZ SKIP
+ 
+ MOV [DI], BL
+ INC SI
+ INC DI
+ JMP SEARCH
+
+SKIP:
+ INC SI
+ JMP SEARCH
+ 
+EXIT:
+ RET
+
+
+STR1 DB "automobile$"
+STR2 DB  10 DUP(0)

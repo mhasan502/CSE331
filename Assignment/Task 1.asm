@@ -1,0 +1,62 @@
+ORG 100H
+
+MOV AH, 9
+MOV DX, OFFSET MSG1
+INT 21H
+
+MOV AH, 9
+MOV DX, OFFSET STR 
+INT 21H
+
+LEA SI, STR
+MOV BL, 0
+COUNT:
+ CMP [SI], "$"
+ JZ PRINT
+ 
+ CMP [SI], "a"
+ JZ SKIP
+ CMP [SI], "e"
+ JZ SKIP
+ CMP [SI], "i"
+ JZ SKIP
+ CMP [SI], "o"
+ JZ SKIP
+ CMP [SI], "u"
+ JZ SKIP
+ CMP [SI], "A"
+ JZ SKIP
+ CMP [SI], "E"
+ JZ SKIP
+ CMP [SI], "I"
+ JZ SKIP
+ CMP [SI], "O"
+ JZ SKIP
+ CMP [SI], "U"
+ JZ SKIP
+   
+ INC BL
+ INC SI
+LOOP COUNT
+
+SKIP:
+ INC SI
+JMP COUNT 
+
+PRINT:
+MOV AH, 9
+MOV DX, OFFSET MSG2
+INT 21H 
+
+MOV DX, 0
+MOV DL, BL
+ADD DL, '0'
+
+MOV AH, 2
+INT 21H
+
+RET
+
+STR DB "habijabi$"
+MSG1 DB "Given string is:$"
+MSG2 DB 10,13,"Total number of consonants are:$"
